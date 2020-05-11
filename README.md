@@ -8,6 +8,10 @@ The function will send message to another queue. Please modified/comment out it 
 ```
 gradle build
 ```
+## Path to Zip file
+```
+build/distributions/aws-sqs-lambda-java-v1.zip
+```
 
 # Default is DEBUG. Edit following setting to change log level
 ```
