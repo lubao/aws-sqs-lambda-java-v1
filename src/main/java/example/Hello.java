@@ -32,8 +32,7 @@ public class Hello implements RequestHandler<Request, Response> {
     private static final String QUEUE_NAME = "test";
     // Same region 
     private String queueUrl = sqs.getQueueUrl(QUEUE_NAME).getQueueUrl();
-    // private String queueUrl = "https://sqs.us-east-2.amazonaws.com/697732210755/test";
-
+    
     public Response handleRequest(Request request, Context context) {
         System.out.println("Hello");
 
