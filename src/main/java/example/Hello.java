@@ -1,6 +1,7 @@
 package example;
 
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.ClientConfiguration;
 import com.amazonaws.services.lambda.runtime.Context;
 
 import com.amazonaws.services.sqs.AmazonSQS;
@@ -8,7 +9,6 @@ import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 /*
-import com.amazonaws.ClientConfiguration;
 import com.amazonaws.services.sqs.model.AmazonSQSException;
 import com.amazonaws.services.sqs.model.CreateQueueResult;
 import com.amazonaws.services.sqs.model.Message;
@@ -22,21 +22,19 @@ import java.util.List;
 public class Hello implements RequestHandler<Request, Response> {
 
 
-    // final AmazonSQS sqs = AmazonSQSClientBuilder.standard()
-    //    .withClientConfiguration(new ClientConfiguration().withMaxConnections(5))
-    //    .build();//;.defaultClient();
-    // private static final String QUEUE_NAME = "test";
-    // private String queueUrl = sqs.getQueueUrl(QUEUE_NAME).getQueueUrl();
-
-    final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
+    final AmazonSQS sqs = AmazonSQSClientBuilder.standard()
+        .withClientConfiguration(new ClientConfiguration().withMaxConnections(1000))
+        .build();//;.defaultClient();
     private static final String QUEUE_NAME = "test";
-    // Same region 
     private String queueUrl = sqs.getQueueUrl(QUEUE_NAME).getQueueUrl();
+
+    // final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
+    // private static final String QUEUE_NAME = "test";
+    // Same region 
+    // private String queueUrl = sqs.getQueueUrl(QUEUE_NAME).getQueueUrl();
     
     public Response handleRequest(Request request, Context context) {
         System.out.println("Hello");
-
-        
         SendMessageRequest send_msg_request = new SendMessageRequest()
                 .withQueueUrl(queueUrl)
                 .withMessageBody("hello world Java SDK")
